@@ -203,7 +203,7 @@ function renderWidget() {
 
 	$("#myModal").modal()
 
-	$("okta-login-container").css( "display", "block" )
+	$("#okta-login-container").css( "display", "block" )
 
 	oktaSignIn.renderEl(
 		{ el: '#okta-login-container' },
@@ -244,7 +244,7 @@ function register() {
 	html += '</form>'
 
 	$("#modal-title-element").html("Register")
-
+	$("#okta-login-container").hide();
 	$("#ui").html(html)
 
 	$("#myModal").modal()
