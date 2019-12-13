@@ -20,7 +20,7 @@
 <!-- Material Design Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.11/css/mdb.min.css" rel="stylesheet">
 
-	<link rel="stylesheet" href="https://cdn01.boxcdn.net/platform/elements/10.1.0/en-US/explorer.css" />
+	<link rel="stylesheet" href="https://cdn01.boxcdn.net/platform/elements/11.0.0/en-US/explorer.css" />
 
 	<link href="https://ok1static.oktacdn.com/assets/js/sdk/okta-signin-widget/2.6.0/css/okta-sign-in.min.css" type="text/css" rel="stylesheet">
 
@@ -52,7 +52,7 @@
 
 <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=es6,Intl"></script>
 
-<script src="https://cdn01.boxcdn.net/platform/elements/10.1.0/en-US/explorer.js"></script>
+<script src="https://cdn01.boxcdn.net/platform/elements/11.0.0/en-US/explorer.js"></script>
 
 <script>
 
@@ -262,8 +262,6 @@ function register() {
 			$("#registerLink").show()
 			$("#app-container").hide()
 			$(".view").show();
-
-			// $("#username").html("<i>not logged in</i>")
 		})
 		.fail(function(err) {
 		  console.error(err);
@@ -301,9 +299,11 @@ function register() {
 		<section class="view">
 			<div class="row">
 				<div class="col-md-6">
-					<div class="d-flex flex-column justify-content-center align-items-center">
+					<div class="d-flex flex-column ">
 						<h3 class="heading display-4">Welcome to the Okta and Box Platform Demo</h3>
-						<p  class="justify-content-left align-items-left" id="mainMsg1">Shows Okta integration with Box platform and app users</p>
+						<p  class="justify-content-left align-items-left" id="mainMsg1">Shows Okta integration with Box platform and app users.
+							 In this demo we render forms dynamically and use <a href="https://developer.okta.com/code/javascript/okta_auth_sdk/" target="_new">OKTA JavaScript API</a>
+								to integrate to OKTA API. We store the Box App user ID in the OKTA user attributes</p>
 						<p  class="justify-content-left align-items-left" id="mainMsg"></p>
 					</div>
 

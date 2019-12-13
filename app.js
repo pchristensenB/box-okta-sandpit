@@ -4,6 +4,8 @@
 
 require('dotenv').config()
 
+const jwtDecode = require('jwt-decode');
+
 var bodyParser = require('body-parser');
 
 var BoxSDK = require('box-node-sdk');
@@ -80,10 +82,6 @@ app.get('/', function (req, res) {
 	})
 })
 
-// REGISTRATION FORM HANDLER
-// TODO: 	* optimize sequencing between creating Okta user and Box user
-//			* wait to send Okta activation email until after Box user is set up
-
 app.post('/evaluateRegForm', urlencodedParser, function (req, res) {
 
 	var firstName = req.body.firstName;
@@ -154,17 +152,16 @@ app.post('/evaluateRegForm', urlencodedParser, function (req, res) {
 
 // ACCEPT ACCESS TOKEN FROM OKTA, GET AN ACCESS TOKEN FROM BOX
 app.post('/boxUI', urlencodedParser, function (req, res) {
-
-	// call out to Okta to get the user profile
-	console.log("the accessToken is: " + req.body.accessToken)
-
+	var decoded = jwtDecode( req.body.accessToken);
+    console.log("dec:" + 'https://' + process.env.OKTA_TENANT + '/api/v1/users/' + decoded.uid);
 	var options = {
 		method: 'GET',
-		url: 'https://' + process.env.OKTA_TENANT + '/oauth2/v1/userinfo',
+		url: 'https://' + process.env.OKTA_TENANT + '/api/v1/users/' + decoded.uid,
 		headers: {
 			'Cache-Control': 'no-cache',
-			Authorization: 'Bearer ' + req.body.accessToken,
-			Accept: 'application/json'
+			Authorization: 'SSWS ' + process.env.OKTA_API_KEY,
+			Accept: 'application/json',
+			"Content-Type": 'application/json'
 		}
 	}
 
@@ -175,13 +172,13 @@ app.post('/boxUI', urlencodedParser, function (req, res) {
 
 		body = JSON.parse(body)
 
-		console.log("the given name is: " + body.given_name);
+		console.log("the given name is: " + body.profile.firstName);
 
-		console.log("the boxID is: " + body.middle_name);
+		
 
-		var appUserClient = sdk.getAppAuthClient('user', body.middle_name);
+		var appUserClient = sdk.getAppAuthClient('user', body.profile.boxID);
 
-		console.log('App User Client: ' + util.inspect(appUserClient._session));
+		//console.log('App User Client: ' + util.inspect(appUserClient._session));
 
 		appUserClient._session.getAccessToken().then(function(accessToken) {
 			console.log("the access token is: " + accessToken);
