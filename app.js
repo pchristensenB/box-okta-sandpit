@@ -117,31 +117,6 @@ app.post('/evaluateRegForm', urlencodedParser, function (req, res) {
 
 							var appUserClient = sdk.getAppAuthClient('user', boxUser.id);
 
-							// UPLOAD SAMPLE TXT FILE TO USER'S BOX ACCOUNT
-
-							var stream = fs.createReadStream('sampleFiles/firstFile.txt');
-
-							var fileName = "Welcome to Box Platform, " + firstName + "!.txt";
-
-							appUserClient.files.uploadFile('0', fileName, stream, function(err, res) {
-								if (err) throw err;
-								else {
-									console.log(res);
-								}
-							});
-
-							// UPLOAD SAMPLE PPT FILE TO USER'S BOX ACCOUNT
-
-							stream = fs.createReadStream('sampleFiles/boxAndOktaPlatformFlows.pptx');
-
-							fileName = "OktaBoxArchitectureFlows.pptx";
-
-							appUserClient.files.uploadFile('0', fileName, stream, function(err, res) {
-								if (err) throw err;
-								else {
-									console.log(res);
-								}
-							});
 						}
 					});
 				}
@@ -298,7 +273,7 @@ function updateOktaUser(oktaUserID, boxUserID, callback) {
 		});
 	});
 
-	req.write(JSON.stringify({ profile: { middle_name: boxUserID } }));
+	req.write(JSON.stringify({ profile: { boxID: boxUserID } }));
 
 	req.end();
 }
