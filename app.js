@@ -38,8 +38,8 @@ app.listen(port, function () {
 })
 
 
- var jsonParser = bodyParser.json()
- var urlencodedParser = bodyParser.urlencoded({ extended: false });
+var jsonParser = bodyParser.json()
+var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 //////////////////////////////////////////////////
 
@@ -90,15 +90,15 @@ app.post('/evaluateRegForm', urlencodedParser, function (req, res) {
 
 	console.log("***************first name: " + firstName)
 
-	createOktaUser(firstName, lastName, email, (errMsg, oktaUserID) => {
+	createOktaUser(firstName, lastName, email,(errMsg, oktaUserID) => {
 		if (errMsg) {
 
-			res.json({msg: errMsg})
+			res.json({ msg: errMsg })
 		}
 		else { // SUCCESSFULLY CREATED OKTA USER
 			console.log("successfully created an Okta user with id " + oktaUserID);
 
-			res.json({ msg: "success", firstName: firstName, email: email})
+			res.json({ msg: "success", firstName: firstName, email: email })
 
 			createBoxUser(firstName, lastName, (errMsg, boxUser) => {
 
@@ -127,8 +127,8 @@ app.post('/evaluateRegForm', urlencodedParser, function (req, res) {
 
 // ACCEPT ACCESS TOKEN FROM OKTA, GET AN ACCESS TOKEN FROM BOX
 app.post('/boxUI', urlencodedParser, function (req, res) {
-	var decoded = jwtDecode( req.body.accessToken);
-    console.log("dec:" + 'https://' + process.env.OKTA_TENANT + '/api/v1/users/' + decoded.uid);
+	var decoded = jwtDecode(req.body.accessToken);
+	console.log("dec:" + 'https://' + process.env.OKTA_TENANT + '/api/v1/users/' + decoded.uid);
 	var options = {
 		method: 'GET',
 		url: 'https://' + process.env.OKTA_TENANT + '/api/v1/users/' + decoded.uid,
@@ -142,27 +142,27 @@ app.post('/boxUI', urlencodedParser, function (req, res) {
 
 	request(options, function (error, response, body) {
 		if (error) throw new Error(error);
-
-		console.log(body)
-
+		//console.log(body)
 		body = JSON.parse(body)
-
-		console.log("the given name is: " + body.profile.firstName);
-
-		
-
 		var appUserClient = sdk.getAppAuthClient('user', body.profile.boxID);
-
-		//console.log('App User Client: ' + util.inspect(appUserClient._session));
-
-		appUserClient._session.getAccessToken().then(function(accessToken) {
-			console.log("the access token is: " + accessToken);
-			res.json({accessToken: accessToken});
+		appUserClient._session.getAccessToken().then(function (accessToken) {
+			appUserClient.users.get(appUserClient.CURRENT_USER_ID,{fields:'id,name,login,external_app_user_id'}).then(currentUser => {
+				console.log(JSON.stringify(currentUser));
+				res.json({ 
+					accessToken: accessToken,
+					oktaId:body.id,
+					userName:body.profile.firstName + " " + body.profile.lastName,
+					email:body.profile.email,
+					login:currentUser.login,
+					extId:currentUser.external_app_user_id,
+					appUserID:currentUser.id
+				});
+			})
 		})
 	})
 })
 
-function createOktaUser(firstName, lastName, email, callback) {
+function createOktaUser(firstName, lastName, email,callback) {
 
 	// CREATE THE USER IN OKTA
 	// user will receive an activation email
@@ -170,7 +170,7 @@ function createOktaUser(firstName, lastName, email, callback) {
 		"method": "POST",
 		"hostname": process.env.OKTA_TENANT,
 		"port": null,
-		"path": "/api/v1/users?activate=true",
+		"path": "/api/v1/users?activate=false",
 		"headers": {
 			"accept": "application/json",
 			"content-type": "application/json",
@@ -209,11 +209,15 @@ function createOktaUser(firstName, lastName, email, callback) {
 		});
 	});
 
-	req.write(JSON.stringify({ profile: 
-		{ firstName: firstName,
+	req.write(JSON.stringify({
+		profile:
+		{
+			firstName: firstName,
 			lastName: lastName,
 			email: email,
-			login: email } }));
+			login: email
+		}
+	}));
 
 	req.end();
 }
@@ -224,7 +228,7 @@ function createBoxUser(firstName, lastName, callback) {
 
 	var serviceAccountClient = sdk.getAppAuthClient('enterprise', process.env.BOX_ENTERPRISE_ID);
 
-	serviceAccountClient.enterprise.addAppUser(name, { "is_platform_access_only": true }, function(err, res) {
+	serviceAccountClient.enterprise.addAppUser(name, { "is_platform_access_only": true }, function (err, res) {
 		if (err) throw err
 
 		else {
