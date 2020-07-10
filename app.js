@@ -170,7 +170,7 @@ function createOktaUser(firstName, lastName, email,callback) {
 		"method": "POST",
 		"hostname": process.env.OKTA_TENANT,
 		"port": null,
-		"path": "/api/v1/users?activate=false",
+		"path": "/api/v1/users?activate=true",
 		"headers": {
 			"accept": "application/json",
 			"content-type": "application/json",
