@@ -142,7 +142,7 @@ app.post('/boxUI', urlencodedParser, function (req, res) {
 
 	request(options, function (error, response, body) {
 		if (error) throw new Error(error);
-		//console.log(body)
+		console.log(body);
 		body = JSON.parse(body)
 		var appUserClient = sdk.getAppAuthClient('user', body.profile.boxID);
 		appUserClient._session.getAccessToken().then(function (accessToken) {
