@@ -8,7 +8,7 @@ const jwtDecode = require('jwt-decode');
 
 var bodyParser = require('body-parser');
 
-var BoxSDK = require('box-node-sdk');
+const BoxSDK = require('box-node-sdk');
 
 const express = require('express');
 
@@ -30,16 +30,16 @@ const app = express();
 var port = process.env.PORT || 3000;
 
 app.use(express.static('public'))
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
 
 app.listen(port, function () {
 	console.log('App listening on port ' + port + '...');
 })
 
 
-var jsonParser = bodyParser.json()
-var urlencodedParser = bodyParser.urlencoded({ extended: false });
+var jsonParser = express.json()
+var urlencodedParser = express.urlencoded({ extended: false });
 
 //////////////////////////////////////////////////
 
@@ -48,21 +48,10 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false });
 // Look to see if the key has already been loaded into the
 // environment - through heroku config vars for example
 // If not, then load the key from a local file
-if (!(process.env.BOX_PRIVATE_KEY)) {
-	process.env.BOX_PRIVATE_KEY = fs.readFileSync('boxKey.pem', 'utf8')
-}
+const boxAppSettings = process.env.BOX_JWT;
 
-var sdk = new BoxSDK({
-	clientID: process.env.BOX_CLIENT_ID,
-	clientSecret: process.env.BOX_CLIENT_SECRET,
-
-	appAuth: {
-		keyID: process.env.BOX_PUBLIC_KEY_ID,
-		privateKey: process.env.BOX_PRIVATE_KEY,
-		passphrase: process.env.BOX_PASSPHRASE
-	}
-})
-
+let session = BoxSDK.getPreconfiguredInstance(JSON.parse(boxAppSettings));
+serviceAccountClient = session.getAppAuthClient('enterprise');
 //////////////////////////////////////////////////
 
 // HOME PAGE
@@ -115,7 +104,7 @@ app.post('/evaluateRegForm', urlencodedParser, function (req, res) {
 						else { // UPDATED OKTA USER RECORD WITH BOX ID
 							console.log("Okta user record successfully updated with Box ID.");
 
-							var appUserClient = sdk.getAppAuthClient('user', boxUser.id);
+							var appUserClient = serviceAccountClient.getAppAuthClient('user', boxUser.id);
 
 						}
 					});
@@ -144,7 +133,7 @@ app.post('/boxUI', urlencodedParser, function (req, res) {
 		if (error) throw new Error(error);
 		console.log(body);
 		body = JSON.parse(body)
-		var appUserClient = sdk.getAppAuthClient('user', body.profile.boxID);
+		var appUserClient = session.getAppAuthClient('user', body.profile.boxID);
 		appUserClient._session.getAccessToken().then(function (accessToken) {
 			appUserClient.users.get(appUserClient.CURRENT_USER_ID,{fields:'id,name,login,external_app_user_id'}).then(currentUser => {
 				console.log(JSON.stringify(currentUser));
@@ -225,8 +214,6 @@ function createOktaUser(firstName, lastName, email,callback) {
 function createBoxUser(firstName, lastName, callback) {
 
 	var name = firstName + " " + lastName;
-
-	var serviceAccountClient = sdk.getAppAuthClient('enterprise', process.env.BOX_ENTERPRISE_ID);
 
 	serviceAccountClient.enterprise.addAppUser(name, { "is_platform_access_only": true }, function (err, res) {
 		if (err) throw err
