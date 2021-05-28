@@ -135,7 +135,20 @@ function showBoxUI(boxAccessToken) {
     var contentExplorer = new Box.ContentExplorer();
     contentExplorer.show(folderId, boxAccessToken, {
         container: '#app-container',
-        logoUrl: 'box'
+        logoUrl: 'box',
+        contentPreviewProps: {
+          contentSidebarProps: {
+            detailsSidebarProps: {
+              hasNotices: true,
+              hasProperties: true,
+              hasAccessStats: true,
+              hasVersions: true
+            },
+            hasActivityFeed: true,
+            hasSkills: true,
+            hasMetadata: true
+          }
+        }
     })
     $("#app-container").height(600);
     var coll = document.getElementsByClassName("collapsible");
