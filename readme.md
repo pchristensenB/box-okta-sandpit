@@ -30,13 +30,13 @@ You will need both a Okta free developer account and a Box account
   - Sign-in URIs: http://localhost:3000/, http://localhost:3000/authorization-code/callback, http://localhost:3000/?signout=true
   - Initiate login URI: - http://localhost:3000/authorization-code/callback
 
-  <img src="/public/img/app.png" width="75%" height="75%">
+  <img src="/images/app.png" width="75%" height="75%">
 
 6. Go to 'Directory' -> 'Profile editor' and find the profile for your app and add new string attribute
   - Display Name=BoxId
   - Variable Name=boxId
   
-  <img src="/public/img/attr.png" width="75%" height="75%">
+  <img src="/images/attr.png" width="75%" height="75%">
 
 
   
