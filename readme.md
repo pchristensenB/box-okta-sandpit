@@ -36,7 +36,7 @@ You will need both a Okta free developer account and a Box account
   - Display Name=BoxId
   - Variable Name=boxId
   
-  <img src="/images/attr.png" width="75%" height="75%">
+  <img src="/images/profile.png" width="75%" height="75%">
 
 
   
