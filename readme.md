@@ -38,5 +38,29 @@ You will need both a Okta free developer account and a Box account
   
   <img src="/images/profile.png" width="75%" height="75%">
 
+## Box
+
+1. Create a new JWT Application https://developer.box.com/guides/authentication/jwt/jwt-setup/
+2. Download the json file with the private key
+   This will be downloaded as json file with 12 lines. Remove all line ending to make it a single line
+  
+    From
+
+    <img src="/images/multi.png" width="50%" height="50%">
+
+    
+    To
+    
+    <img src="/images/single.png" width="50%" height="50%">
+
+## Setup and run the app
+
+1. Clone this repository and create an '.env' file in the root and add the following key/value pair
+  -  AUTH0_CLIENT_ID=..from the settings page of your Auth0 app
+  -  AUTH0_DOMAIN=..from the settings page of your Auth0 app
+  -  AUTH0_CLIENT_SECRET=....from the settings page of your Auth0 app
+  -  SESSION_SECRET=..random string 
+  -  AUTH0_CALLBACK_URL=http://localhost:3000/callback
+  -  BOX_JWT=..jwt json config in a single line
 
   
