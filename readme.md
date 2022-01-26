@@ -56,11 +56,12 @@ You will need both a Okta free developer account and a Box account
 ## Setup and run the app
 
 1. Clone this repository and create an '.env' file in the root and add the following key/value pair
-  -  AUTH0_CLIENT_ID=..from the settings page of your Auth0 app
-  -  AUTH0_DOMAIN=..from the settings page of your Auth0 app
-  -  AUTH0_CLIENT_SECRET=....from the settings page of your Auth0 app
-  -  SESSION_SECRET=..random string 
-  -  AUTH0_CALLBACK_URL=http://localhost:3000/callback
+  -  OKTA_TENANT=..from the General page of your Okta app (Okta domain)
+  -  OKTA_API_KEY=..In Okta, go to Security->API->Tokens, Create token and copy here
+  -  OKTA_CLIENT_ID=..from the General page of your Okta app
+  -  OKTA_CLIENT_SECRET=..from the General page of your Okta app
+  -  OKTA_REDIRECT_URI=http://localhost:3000
+  -  OKTA_LOGO=..URL to a logo you want to use for your login dialog
   -  BOX_JWT=..jwt json config in a single line
 
   
