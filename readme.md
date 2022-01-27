@@ -86,9 +86,9 @@ You will need both a Okta free developer account and a Box account
    
    Once logged in you can see user info 
    
-  <img src="/images/userinfo.png" width="50%" height="50%">
+  <img src="/images/userinfo.png" width="75%" height="75%">
   
   And create a folder as the registered app user
   
-  <img src="/images/oktafolder.png" width="50%" height="50%">
+  <img src="/images/oktafolder.png" width="75%" height="75%">
    
