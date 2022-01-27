@@ -72,9 +72,11 @@ You will need both a Okta free developer account and a Box account
    
    npm start
    
-   This should bring up this website on localhost:3000 and you can go through the registration process
+   This should bring up this website on localhost:3000 
    
    <img src="/images/appfront.png" width="50%" height="50%">
+   
+   You can go through the registration process
    
    <img src="/images/reg.png" width="50%" height="50%">
    
