@@ -66,6 +66,7 @@ You will need both a Okta free developer account and a Box account
   -  BOX_JWT=..jwt json config in a single line
 
 2. Install dependencies
+
    npm install
         
 3. Run the app
