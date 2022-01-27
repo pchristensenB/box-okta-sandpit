@@ -41,7 +41,8 @@ You will need both a Okta free developer account and a Box account
 ## Box
 
 1. Create a new JWT Application https://developer.box.com/guides/authentication/jwt/jwt-setup/
-2. Download the json file with the private key
+2. Add http://localhost:3000 to the CORS exceptions in your app configuration
+3. Download the json file with the private key
    This will be downloaded as json file with 12 lines. Remove all line ending to make it a single line
   
     From
@@ -64,4 +65,28 @@ You will need both a Okta free developer account and a Box account
   -  OKTA_LOGO=..URL to a logo you want to use for your login dialog
   -  BOX_JWT=..jwt json config in a single line
 
+2. Install dependencies
+   npm install
+        
+3. Run the app
+   
+   npm start
+   
+   This should bring up this website on localhost:3000 and you can go through the registration process
+   
+   <img src="/images/appfront.png" width="50%" height="50%">
+   
+   <img src="/images/reg.png" width="50%" height="50%">
+   
+   This will send an email with instructions on account activation (this part can be configured in your Okta app) and then you can login
+   
+   <img src="/images/login.png" width="50%" height="50%">
+   
+   Once logged in you can see user info 
+   
+  <img src="/images/userinfo.png" width="50%" height="50%">
   
+  And create a folder as the registered app user
+  
+  <img src="/images/oktafolder.png" width="50%" height="50%">
+   
