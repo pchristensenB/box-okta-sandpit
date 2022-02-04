@@ -5,11 +5,11 @@ See the below diagrams for details
 
 Registration flow
 
-<img src="/public/img/register.png" width="75%" height="75%">
+<img src="/public/img/register.png" width="90%" height="90%">
         
 Login flow
 
-<img src="/public/img/login.png" width="75%" height="75%">
+<img src="/public/img/login.png" width="90%" height="90%">
 
 
 ## Pre-requisites
