@@ -1,5 +1,5 @@
 # Okta and Box Platform demo
-This sample will show integration between Okta and Box platform and app users. The sample will allow you to register a user in Okta and this will automatically create a mapped app user in Box to allow interaction with Box content in a Box UI Element.
+This sample will show integration between Okta and Box platform and app users. The sample will allow you to register a user in Okta and this will automatically create a mapped app user in Box to allow interaction with Box content in a [Box UI Element] (https://developer.box.com/guides/embed/ui-elements/).
 
 See the below diagrams for details
 
