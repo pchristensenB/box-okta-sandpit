@@ -45,9 +45,7 @@ var urlencodedParser = express.urlencoded({ extended: false });
 
 // SET UP BOX SDK
 
-// Look to see if the key has already been loaded into the
-// environment - through heroku config vars for example
-// If not, then load the key from a local file
+// Load Box jwt config from environment
 const boxAppSettings = process.env.BOX_JWT;
 
 let session = BoxSDK.getPreconfiguredInstance(JSON.parse(boxAppSettings));
