@@ -115,7 +115,7 @@ app.post('/evaluateRegForm', urlencodedParser, function (req, res) {
 // ACCEPT ACCESS TOKEN FROM OKTA, GET AN ACCESS TOKEN FROM BOX
 app.post('/boxUI', urlencodedParser, function (req, res) {
 	var decoded = jwtDecode(req.body.accessToken);
-	console.log("dec:" + 'https://' + process.env.OKTA_TENANT + '/api/v1/users/' + decoded.uid + ":" + process.env.OKTA_API_KEY);
+	console.log("dec:" + 'https://' + process.env.OKTA_TENANT + '/api/v1/users/' + decoded.uid);
 	var options = {
 		method: 'GET',
 		url: 'https://' + process.env.OKTA_TENANT + '/api/v1/users/' + decoded.uid,
